@@ -6,21 +6,58 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
+import br.dev.weslei.tarefas.dao.FuncionarioDAO;
 import br.dev.weslei.tarefas.model.Funcionario;
 import br.dev.weslei.tarefas.model.Tarefa;
 
 public class Main {
 	
-	// Detererminando o caminho do arquivo que será lido e gravado
 	private static String path = "C:\\Users\\25133277\\Tarefa\\Tarefas.txt";
 
 	public static void main(String[] args) {
 		
-		Tarefa t = new Tarefa("Pagar o fornecedor");
+		List<String> frutas = new ArrayList<>();
+		List<Funcionario> funcionarios = new ArrayList<>();
+		List<Double> numeros = new ArrayList<>();
 		
-		gravarArquivo();
-		lerArquivo();
+		frutas.add("Pera");
+		frutas.add("Melância");
+		frutas.add("Banana da terra");
+		frutas.add("Mamão papaya");
+		frutas.add("Figo");
+		
+		numeros.add(5.5);
+		numeros.add(6.6);
+		
+		
+		Funcionario funcionario = new Funcionario();
+		funcionario.setCodigo(4);
+		funcionario.setNome("Bucho de Cadela Prenha");
+		funcionario.setMatricula("909090");
+		funcionario.setEmail("buchodecadela@gmail.com");
+		
+		Funcionario funcionario2 = new Funcionario();
+		funcionario2.setCodigo(5);
+		funcionario2.setNome("Minamino");
+		funcionario2.setMatricula("1010101");
+		funcionario2.setEmail("minamino@gmail.com");
+		
+		funcionarios.addAll(List.of(funcionario, funcionario2));
+		
+		
+		for (Funcionario f : funcionarios) {
+			System.out.println(f.getNome() + " - " + f.getEmail());
+		}
+
+//		FuncionarioDAO dao =new FuncionarioDAO(funcionario);
+//		dao.gravar();
+//		
+//		System.out.println(funcionario.toString());
+		
+		
 
 	}
 	
@@ -35,6 +72,7 @@ public class Main {
 			
 			writer.write("Essa é a última linha, por enquanto!!!\n");
 			writer.flush();
+			
 		} catch (Exception erro) {
 			System.out.println(erro.getMessage());
 		}
@@ -51,6 +89,7 @@ public class Main {
 			buffer = new BufferedReader(file);
 			
 			String line = buffer.readLine();
+			
 			while(line !=null) {
 				System.out.println(line);
 				line = buffer.readLine();
