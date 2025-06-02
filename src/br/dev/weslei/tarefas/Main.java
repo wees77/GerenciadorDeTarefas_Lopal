@@ -12,6 +12,9 @@ import java.util.List;
 import br.dev.weslei.tarefas.dao.FuncionarioDAO;
 import br.dev.weslei.tarefas.model.Funcionario;
 import br.dev.weslei.tarefas.model.Tarefa;
+import br.dev.weslei.tarefas.ui.FrameFuncionario;
+import br.dev.weslei.tarefas.ui.FrameInicio;
+import br.dev.weslei.tarefas.ui.FrameListaFuncionario;
 
 public class Main {
 	
@@ -19,46 +22,11 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		List<String> frutas = new ArrayList<>();
-		List<Funcionario> funcionarios = new ArrayList<>();
-		List<Double> numeros = new ArrayList<>();
+		new FrameInicio();
+		//new FrameListaFuncionario();
+		//new FrameFuncionario();
 		
-		frutas.add("Pera");
-		frutas.add("Melância");
-		frutas.add("Banana da terra");
-		frutas.add("Mamão papaya");
-		frutas.add("Figo");
-		
-		numeros.add(5.5);
-		numeros.add(6.6);
-		
-		
-		Funcionario funcionario = new Funcionario();
-		funcionario.setCodigo(4);
-		funcionario.setNome("Bucho de Cadela Prenha");
-		funcionario.setMatricula("909090");
-		funcionario.setEmail("buchodecadela@gmail.com");
-		
-		Funcionario funcionario2 = new Funcionario();
-		funcionario2.setCodigo(5);
-		funcionario2.setNome("Minamino");
-		funcionario2.setMatricula("1010101");
-		funcionario2.setEmail("minamino@gmail.com");
-		
-		funcionarios.addAll(List.of(funcionario, funcionario2));
-		
-		
-		for (Funcionario f : funcionarios) {
-			System.out.println(f.getNome() + " - " + f.getEmail());
-		}
-
-//		FuncionarioDAO dao =new FuncionarioDAO(funcionario);
-//		dao.gravar();
-//		
-//		System.out.println(funcionario.toString());
-		
-		
-
+	
 	}
 	
 	public static void gravarArquivo() {
