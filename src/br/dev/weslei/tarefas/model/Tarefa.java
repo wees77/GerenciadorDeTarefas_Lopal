@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 public class Tarefa {
 
-	private int codigo;
+	private String codigo;
 	private String titulo;
 	private String descricao;
 	private LocalDateTime dataInicial;
@@ -14,6 +14,14 @@ public class Tarefa {
 	private Funcionario responsavel;
 	
 	// Método construtor
+	public String getCodigo() {
+		return codigo;
+	}
+	
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
+	}
+	
 	public Tarefa(String titulo) {
 		this.titulo = titulo;
 	}
@@ -72,10 +80,6 @@ public class Tarefa {
 
 	public void setResponsavel(Funcionario responsavel) {
 		this.responsavel = responsavel;
-	}
-
-	public int getCodigo() {
-		return codigo;
 	}
 
 	public LocalDateTime getDataConclusao() {

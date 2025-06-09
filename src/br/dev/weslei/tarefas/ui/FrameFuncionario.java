@@ -91,7 +91,7 @@ public class FrameFuncionario {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					Funcionario funcionario = new Funcionario();
-					funcionario.setCodigo(Utils.gerarUUID());
+					funcionario.setCodigo(Utils.gerarTDSequencial());
 					funcionario.setNome(txtNome.getText());
 					funcionario.setTelefone(txtTelefone.getText());
 					funcionario.setEmail(txtEmail.getText());

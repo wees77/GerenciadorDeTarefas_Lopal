@@ -1,15 +1,12 @@
 package br.dev.weslei.tarefas.utils;
 
-import java.util.UUID;
-
 public class Utils {
-	public static String gerarUUID() {
+	private static int contador = 0; 
+	
 		
-		UUID uuid = UUID.randomUUID();
-		String uuidStr = uuid.toString().substring(0, 8);
-		
-		return uuidStr;
+	public static  synchronized String gerarTDSequencial() {
+		contador++;
+		return String.format("%06d", contador);
 	}
-
 
 }

@@ -19,14 +19,18 @@ public class FrameListaFuncionario {
 	private JLabel labelTitulo;
 	private JTable tableFuncionarios;
 	private JScrollPane scrollFuncionarios;
+	private JFrame telaAnterior;
 	private JButton btnNovo;
+	private JButton btnVoltar;
 	private JButton btnExcluir;
 	private JButton btnAlterar;
 	private JButton btnSair;
 	
 	private Font fontTitulo = new Font("Arial", Font.BOLD, 26);
 	
-	public FrameListaFuncionario() {
+	
+	public FrameListaFuncionario(JFrame telaAnterior) {
+		this.telaAnterior = telaAnterior;
 		criarTela();
 	}
 	
@@ -46,6 +50,8 @@ public class FrameListaFuncionario {
 		labelTitulo.setFont(fontTitulo);
 		
 		btnNovo = new JButton("Cadastrar");
+		btnVoltar = new JButton("Voltar");
+		
 		
 		// Criação da tabela
 		String[] colunas = {"Código", "Nome", "E-mail"};
@@ -56,8 +62,7 @@ public class FrameListaFuncionario {
 		
 		List<Funcionario> funcionarios = dao.exibirFuncionarios();
 		
-		
-		Object[][] dados = new Object[funcionarios.size()][3];
+			Object[][] dados = new Object[funcionarios.size()][3];
 			
 		int linha = 0;
 		for(Funcionario f : funcionarios) {
@@ -73,11 +78,12 @@ public class FrameListaFuncionario {
 		scrollFuncionarios.setBounds(10, 70, 500, 300);
 		
 		btnNovo.setBounds(10,380,150,40);
-				
+		btnVoltar.setBounds(170, 380, 150, 40);		
 				
 		painel.add(labelTitulo);		
 		painel.add(scrollFuncionarios);
 		painel.add(btnNovo);		
+		painel.add(btnVoltar);		
 		tela.setVisible(true);
 		
 		btnNovo.addActionListener(new ActionListener() {
@@ -90,6 +96,18 @@ public class FrameListaFuncionario {
 			}
 		});
 		
+		
+		btnVoltar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				tela.dispose();
+				telaAnterior.setVisible(true);
+				
+				
+				
+			}
+		});
 	}
 
 }

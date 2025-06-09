@@ -48,7 +48,7 @@ public class FrameInicio {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new FrameListaFuncionario();
+				new FrameListaFuncionario(tela);
 				
 			}
 		});
@@ -57,7 +57,7 @@ public class FrameInicio {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new FrameTarefa();
+				new FrameListaTarefas(tela);
 				
 			}
 		});
