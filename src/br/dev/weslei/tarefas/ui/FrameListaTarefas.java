@@ -57,7 +57,7 @@ public class FrameListaTarefas {
         btnVoltar.setBounds(170, 380, 150, 40);
         
         // Define colunas da tabela
-        String[] colunas = { "Código", "Titulo", "Descrição", "Responsável" };
+        String[] colunas = {"Titulo", "Descrição", "Data Inicial", "Prazo", "Data de Conclusão", "Status", "Responsável" };
         tableModel = new DefaultTableModel(colunas, 0); // 0 linhas inicialmente
 
         tableTarefas = new JTable(tableModel);
@@ -101,7 +101,7 @@ public class FrameListaTarefas {
         List<Tarefa> tarefas = dao.exibirTarefas();
 
         for (Tarefa t : tarefas) {
-            Object[] linha = { t.getCodigo(), t.getTitulo(), t.getDescricao(), t.getResponsavel().getNome() };
+            Object[] linha = {t.getTitulo(), t.getDescricao(), t.getDataInicial(), t.getPrazo(), t.getDataConclusao(), t.getStatus(), t.getResponsavel().getNome() };
             tableModel.addRow(linha);
         }
     }

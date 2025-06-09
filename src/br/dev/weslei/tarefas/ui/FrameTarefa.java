@@ -3,41 +3,42 @@ package br.dev.weslei.tarefas.ui;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-import javax.swing.DefaultListCellRenderer;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 import br.dev.weslei.tarefas.dao.FuncionarioDAO;
 import br.dev.weslei.tarefas.dao.TarefaDAO;
 import br.dev.weslei.tarefas.model.Funcionario;
+import br.dev.weslei.tarefas.model.Status;
 import br.dev.weslei.tarefas.model.Tarefa;
-import br.dev.weslei.tarefas.utils.Utils;
 
 public class FrameTarefa {
 
-    private JLabel labelCodigo;
-    private JLabel labelNome;
+    private JLabel labelTitulo;
     private JLabel labelDesc;
+    private JLabel labelDataInicial;
+    private JLabel labelPrazo;
+    private JLabel labelDataConclusao;
+    private JLabel labelStatus;
     private JLabel labelFuncionario;
 
-    private JTextField txtCodigo;
-    private JTextField txtNome;
+    private JTextField txtTitulo;
     private JTextField txtDesc;
+    private JTextField txtDataInicial;
+    private JTextField txtPrazo;
+    private JTextField txtDataConclusao;
 
+    private JComboBox<Status> comboStatus;
     private JComboBox<Funcionario> comboFuncionarios;
     private List<Funcionario> funcionarios;
 
     private JButton btnSalvar;
     private JButton btnSair;
 
-    private FrameListaTarefas frameListaTarefas;  // Referência para atualizar lista
+    private FrameListaTarefas frameListaTarefas;
 
     public FrameTarefa(FrameListaTarefas frameListaTarefas) {
         this.frameListaTarefas = frameListaTarefas;
@@ -53,44 +54,58 @@ public class FrameTarefa {
     private void criarTela() {
         JDialog tela = new JDialog((JFrame) null, "Cadastro de Tarefa", true);
         tela.setLayout(null);
-        tela.setSize(400, 400);
+        tela.setSize(400, 600);
         tela.setResizable(false);
         tela.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         tela.setLocationRelativeTo(null);
 
         Container painel = tela.getContentPane();
 
-        labelCodigo = new JLabel("Código:");
-        labelCodigo.setBounds(20, 20, 200, 30);
-        txtCodigo = new JTextField();
-        txtCodigo.setBounds(20, 50, 200, 30);
-        txtCodigo.setEnabled(false);
-
-        labelNome = new JLabel("Nome:");
-        labelNome.setBounds(20, 85, 200, 30);
-        txtNome = new JTextField();
-        txtNome.setBounds(20, 115, 350, 30);
+        labelTitulo = new JLabel("Título:");
+        labelTitulo.setBounds(20, 20, 200, 30);
+        txtTitulo = new JTextField();
+        txtTitulo.setBounds(20, 50, 350, 30);
 
         labelDesc = new JLabel("Descrição:");
-        labelDesc.setBounds(20, 150, 200, 30);
+        labelDesc.setBounds(20, 85, 200, 30);
         txtDesc = new JTextField();
-        txtDesc.setBounds(20, 180, 350, 30);
+        txtDesc.setBounds(20, 115, 350, 30);
+
+        labelDataInicial = new JLabel("Data Inicial:");
+        labelDataInicial.setBounds(20, 150, 200, 30);
+        txtDataInicial = new JTextField();
+        txtDataInicial.setBounds(20, 180, 350, 30);
+
+        labelPrazo = new JLabel("Prazo:");
+        labelPrazo.setBounds(20, 215, 200, 30);
+        txtPrazo = new JTextField();
+        txtPrazo.setBounds(20, 245, 350, 30);
+
+        labelDataConclusao = new JLabel("Data conclusão:");
+        labelDataConclusao.setBounds(20, 280, 200, 30);
+        txtDataConclusao = new JTextField();
+        txtDataConclusao.setBounds(20, 310, 350, 30);
+
+        labelStatus = new JLabel("Status:");
+        labelStatus.setBounds(20, 345, 200, 30);
+        comboStatus = new JComboBox<>();
+        comboStatus.setBounds(20, 375, 350, 30);
+        for (Status s : Status.values()) {
+            comboStatus.addItem(s);
+        }
 
         labelFuncionario = new JLabel("Funcionário:");
-        labelFuncionario.setBounds(20, 215, 200, 30);
-
+        labelFuncionario.setBounds(20, 410, 200, 30);
         comboFuncionarios = new JComboBox<>();
-        comboFuncionarios.setBounds(20, 245, 350, 30);
+        comboFuncionarios.setBounds(20, 440, 350, 30);
 
         for (Funcionario f : funcionarios) {
             comboFuncionarios.addItem(f);
         }
 
-        // Renderizar só o nome do funcionário no combobox
         comboFuncionarios.setRenderer(new DefaultListCellRenderer() {
             @Override
-            public java.awt.Component getListCellRendererComponent(javax.swing.JList<?> list, Object value,
-                    int index, boolean isSelected, boolean cellHasFocus) {
+            public java.awt.Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
                 super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
                 if (value instanceof Funcionario) {
                     setText(((Funcionario) value).getNome());
@@ -100,17 +115,23 @@ public class FrameTarefa {
         });
 
         btnSalvar = new JButton("Salvar");
-        btnSalvar.setBounds(20, 290, 100, 40);
+        btnSalvar.setBounds(20, 500, 100, 40);
 
         btnSair = new JButton("Sair");
-        btnSair.setBounds(130, 290, 100, 40);
+        btnSair.setBounds(130, 500, 100, 40);
 
-        painel.add(labelCodigo);
-        painel.add(txtCodigo);
-        painel.add(labelNome);
-        painel.add(txtNome);
+        painel.add(labelTitulo);
+        painel.add(txtTitulo);
         painel.add(labelDesc);
         painel.add(txtDesc);
+        painel.add(labelDataInicial);
+        painel.add(txtDataInicial);
+        painel.add(labelPrazo);
+        painel.add(txtPrazo);
+        painel.add(labelDataConclusao);
+        painel.add(txtDataConclusao);
+        painel.add(labelStatus);
+        painel.add(comboStatus);
         painel.add(labelFuncionario);
         painel.add(comboFuncionarios);
         painel.add(btnSalvar);
@@ -119,32 +140,47 @@ public class FrameTarefa {
         btnSalvar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Tarefa tarefa = new Tarefa();
-                tarefa.setCodigo(Utils.gerarTDSequencial());
-                tarefa.setTitulo(txtNome.getText());
-                tarefa.setDescricao(txtDesc.getText());
-                tarefa.setResponsavel((Funcionario) comboFuncionarios.getSelectedItem());
+                try {
+                    Tarefa tarefa = new Tarefa();
+                    tarefa.setTitulo(txtTitulo.getText());
+                    tarefa.setDescricao(txtDesc.getText());
 
-                TarefaDAO dao = new TarefaDAO(tarefa);
-                dao.gravar();
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-                JOptionPane.showMessageDialog(tela,
-                        txtNome.getText() + " gravado com sucesso!",
-                        "Sucesso",
-                        JOptionPane.INFORMATION_MESSAGE);
+                    LocalDate dataInicial = LocalDate.parse(txtDataInicial.getText(), formatter);
+                    LocalDate prazo = LocalDate.parse(txtPrazo.getText(), formatter);
+                    LocalDate dataConclusao = LocalDate.parse(txtDataConclusao.getText(), formatter);
 
-                limparFormulario();
+                    tarefa.setDataInicial(dataInicial);
+                    tarefa.setPrazo(prazo);
+                    tarefa.setDataConclusao(dataConclusao);
 
-                // Atualiza a lista de tarefas na tela principal
-                if (frameListaTarefas != null) {
-                    frameListaTarefas.atualizarLista();
+                    tarefa.setStatus((Status) comboStatus.getSelectedItem());
+                    tarefa.setResponsavel((Funcionario) comboFuncionarios.getSelectedItem());
+
+                    TarefaDAO dao = new TarefaDAO(tarefa);
+                    dao.gravar();
+
+                    JOptionPane.showMessageDialog(tela,
+                            tarefa.getTitulo() + " gravado com sucesso!",
+                            "Sucesso",
+                            JOptionPane.INFORMATION_MESSAGE);
+
+                    limparFormulario();
+
+                    if (frameListaTarefas != null) {
+                        frameListaTarefas.atualizarLista();
+                    }
+
+                    tela.dispose();
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(tela,
+                        "Erro ao salvar tarefa: " + ex.getMessage(),
+                        "Erro",
+                        JOptionPane.ERROR_MESSAGE);
                 }
-
-                // Fecha o diálogo após salvar (opcional)
-                tela.dispose();
             }
         });
-
         btnSair.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -163,9 +199,14 @@ public class FrameTarefa {
     }
 
     private void limparFormulario() {
-        txtNome.setText(null);
+        txtTitulo.setText(null);
         txtDesc.setText(null);
+        txtDataInicial.setText(null);
+        txtPrazo.setText(null);
+        txtDataConclusao.setText(null);
+        comboStatus.setSelectedIndex(0);
         comboFuncionarios.setSelectedIndex(0);
-        txtNome.requestFocus();
+        txtTitulo.requestFocus();
     }
 }
+

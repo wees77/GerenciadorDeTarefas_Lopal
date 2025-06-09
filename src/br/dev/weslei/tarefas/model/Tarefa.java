@@ -1,27 +1,19 @@
 package br.dev.weslei.tarefas.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Tarefa {
-
-	private String codigo;
+	
 	private String titulo;
 	private String descricao;
-	private LocalDateTime dataInicial;
-	private LocalDateTime prazo;
-	private LocalDateTime dataConclusao;
+	private LocalDate dataInicial;
+	private LocalDate prazo;
+	private LocalDate dataConclusao;
 	private Status status;
 	private Funcionario responsavel;
 	
 	// Método construtor
-	public String getCodigo() {
-		return codigo;
-	}
-	
-	public void setCodigo(String codigo) {
-		this.codigo = codigo;
-	}
-	
 	public Tarefa(String titulo) {
 		this.titulo = titulo;
 	}
@@ -50,20 +42,29 @@ public class Tarefa {
 		this.descricao = descricao;
 	}
 
-	public LocalDateTime getDataInicial() {
+	public LocalDate getDataInicial() {
 		return dataInicial;
 	}
 
-	public void setDataInicial(LocalDateTime dataInicial) {
+	public void setDataInicial(LocalDate dataInicial) {
 		this.dataInicial = dataInicial;
 	}
-
-	public LocalDateTime getPrazo() {
-		return prazo;
+	
+	public LocalDate getDataConclusao() {
+		return dataConclusao;
+	}
+	
+	public void setDataConclusao(LocalDate dataConclusao) {
+		this.dataConclusao = dataConclusao;
 	}
 
-	public void setPrazo(LocalDateTime prazo) {
+	
+	public void setPrazo(LocalDate prazo) {
 		this.prazo = prazo;
+	}
+	
+	public LocalDate getPrazo() {
+		return prazo;
 	}
 
 	public Status getStatus() {
@@ -82,8 +83,9 @@ public class Tarefa {
 		this.responsavel = responsavel;
 	}
 
-	public LocalDateTime getDataConclusao() {
-		return dataConclusao;
+	public void setPrazo(String text) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
